@@ -1,0 +1,22 @@
+name: todo_list
+description: A Simple Todo List App
+
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  isar: ^3.0.5
+  isar_flutter_libs: ^3.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+  isar_generator: ^3.0.5
+  build_runner: ^2.3.3
+flutter:
+  uses-material-design: true
