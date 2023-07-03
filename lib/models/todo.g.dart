@@ -7,7 +7,7 @@ part of 'todo.dart';
 // **************************************************************************
 
 // coverage:ignore-file
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetTodoCollection on Isar {
   IsarCollection<Todo> get todos => this.collection();
@@ -17,8 +17,13 @@ const TodoSchema = CollectionSchema(
   name: r'Todo',
   id: -505491818817781703,
   properties: {
-    r'title': PropertySchema(
+    r'isCompleted': PropertySchema(
       id: 0,
+      name: r'isCompleted',
+      type: IsarType.bool,
+    ),
+    r'title': PropertySchema(
+      id: 1,
       name: r'title',
       type: IsarType.string,
     )
@@ -34,7 +39,7 @@ const TodoSchema = CollectionSchema(
   getId: _todoGetId,
   getLinks: _todoGetLinks,
   attach: _todoAttach,
-  version: '3.0.5',
+  version: '3.1.0+1',
 );
 
 int _todoEstimateSize(
@@ -53,7 +58,8 @@ void _todoSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.title);
+  writer.writeBool(offsets[0], object.isCompleted);
+  writer.writeString(offsets[1], object.title);
 }
 
 Todo _todoDeserialize(
@@ -63,9 +69,10 @@ Todo _todoDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Todo(
-    reader.readString(offsets[0]),
+    reader.readString(offsets[1]),
+    reader.readBool(offsets[0]),
+    id: id,
   );
-  object.id = id;
   return object;
 }
 
@@ -77,6 +84,8 @@ P _todoDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
+      return (reader.readBool(offset)) as P;
+    case 1:
       return (reader.readString(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -223,6 +232,16 @@ extension TodoQueryFilter on QueryBuilder<Todo, Todo, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterFilterCondition> isCompletedEqualTo(
+      bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'isCompleted',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
@@ -357,6 +376,18 @@ extension TodoQueryObject on QueryBuilder<Todo, Todo, QFilterCondition> {}
 extension TodoQueryLinks on QueryBuilder<Todo, Todo, QFilterCondition> {}
 
 extension TodoQuerySortBy on QueryBuilder<Todo, Todo, QSortBy> {
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByIsCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCompleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> sortByIsCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCompleted', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -383,6 +414,18 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByIsCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCompleted', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Todo, Todo, QAfterSortBy> thenByIsCompletedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'isCompleted', Sort.desc);
+    });
+  }
+
   QueryBuilder<Todo, Todo, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
@@ -397,6 +440,12 @@ extension TodoQuerySortThenBy on QueryBuilder<Todo, Todo, QSortThenBy> {
 }
 
 extension TodoQueryWhereDistinct on QueryBuilder<Todo, Todo, QDistinct> {
+  QueryBuilder<Todo, Todo, QDistinct> distinctByIsCompleted() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'isCompleted');
+    });
+  }
+
   QueryBuilder<Todo, Todo, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -409,6 +458,12 @@ extension TodoQueryProperty on QueryBuilder<Todo, Todo, QQueryProperty> {
   QueryBuilder<Todo, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<Todo, bool, QQueryOperations> isCompletedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'isCompleted');
     });
   }
 

@@ -5,18 +5,20 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 dependencies:
   flutter:
     sdk: flutter
-  isar: ^3.0.5
-  isar_flutter_libs: ^3.0.5
+  isar: ^3.1.0+1
+  isar_flutter_libs: ^3.1.0+1
+  path_provider: ^2.0.15
+  flutter_riverpod: ^2.3.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
-  isar_generator: ^3.0.5
-  build_runner: ^2.3.3
+  flutter_lints: ^2.0.2
+  isar_generator: ^3.1.0+1
+  build_runner: ^2.4.6
 flutter:
   uses-material-design: true
