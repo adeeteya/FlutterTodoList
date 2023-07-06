@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final authProvider =
@@ -17,19 +18,16 @@ class AuthNotifier extends Notifier<User?> {
     return _client.auth.currentUser;
   }
 
-  Future logIn(BuildContext context, String email) async {
+  Future<void> logIn(BuildContext context, String email) async {
     try {
-      return _client.auth
+      return await _client.auth
           .signInWithOtp(
               email: email.trim(),
               emailRedirectTo: kIsWeb
                   ? null
                   : 'io.supabase.flutterquickstart://login-callback/')
           .then(
-            (_) => ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content: Text('Check your email for a login link!')),
-            ),
+            (_) => context.go("/login/authenticate"),
           );
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

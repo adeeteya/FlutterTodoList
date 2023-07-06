@@ -29,6 +29,7 @@ class SettingsScreen extends ConsumerWidget {
               await ref.read(settingsProvider.notifier).toggleThemeMode();
             },
           ),
+          const SizedBox(height: 10),
           ListTile(
             title: const Text("Theme Color"),
             onTap: () async {
@@ -52,6 +53,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
           ),
+          const SizedBox(height: 10),
           const Divider(),
           ListTile(
             leading: const Icon(Icons.logout),

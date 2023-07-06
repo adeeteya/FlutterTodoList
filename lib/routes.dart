@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list/controllers/auth_controller.dart';
+import 'package:todo_list/screens/check_email.dart';
 import 'package:todo_list/screens/home.dart';
 import 'package:todo_list/screens/settings.dart';
 import 'package:todo_list/screens/sign_in.dart';
@@ -16,6 +17,13 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: "/login",
           name: "Login",
           builder: (context, state) => const SignInScreen(),
+          routes: [
+            GoRoute(
+              path: "authenticate",
+              name: "Authenticate",
+              builder: (context, state) => const CheckEmailScreen(),
+            )
+          ],
         ),
       ],
     );

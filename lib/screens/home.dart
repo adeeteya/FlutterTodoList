@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:todo_list/models/todo.dart';
 import 'package:todo_list/services/database_service.dart';
 import 'package:todo_list/widgets/add_dialog_box.dart';
@@ -119,10 +120,22 @@ class _HomeState extends State<Home> {
               child: CircularProgressIndicator(),
             )
           : (todoList.isEmpty)
-              ? const Center(
-                  child: Text(
-                    "No Tasks left ☺",
-                    style: TextStyle(fontSize: 16),
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Spacer(),
+                      Flexible(
+                        flex: 10,
+                        child: Lottie.asset("assets/todo_done.json"),
+                      ),
+                      const Text(
+                        "All Todos Done",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      const Spacer(flex: 5),
+                    ],
                   ),
                 )
               : AnimatedList(
