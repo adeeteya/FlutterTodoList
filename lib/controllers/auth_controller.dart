@@ -48,5 +48,27 @@ class AuthNotifier extends Notifier<User?> {
     }
   }
 
-  Future<void> logout() => _client.auth.signOut();
+  Future<void> logout(BuildContext context) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Logout"),
+        content: const Text("Are you sure you want to log out of the app?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(foregroundColor: Colors.redAccent),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await _client.auth.signOut();
+            },
+            child: const Text("Logout"),
+          ),
+        ],
+      ),
+    );
+  }
 }

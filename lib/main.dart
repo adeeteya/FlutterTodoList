@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:todo_list/controllers/auth_controller.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
 import 'package:todo_list/private_keys.dart';
-import 'package:todo_list/screens/home.dart';
-import 'package:todo_list/screens/sign_in.dart';
-import 'package:todo_list/services/database_service.dart';
+import 'package:todo_list/routes.dart';
+import 'package:todo_list/services/shared_prefs_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +20,7 @@ Future<void> main() async {
     url: projectUrl,
     anonKey: anonKey,
   );
-  await DatabaseService().init();
+  await SharedPrefService().init();
   runApp(const ProviderScope(child: TodoListApp()));
 }
 
@@ -32,7 +30,7 @@ class TodoListApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsData = ref.watch(settingsProvider);
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Todo List',
       debugShowCheckedModeBanner: false,
       themeMode: settingsData.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
@@ -61,21 +59,7 @@ class TodoListApp extends ConsumerWidget {
           ),
         ),
       ),
-      home: const AuthWrapper(),
+      routerConfig: ref.watch(routerProvider),
     );
-  }
-}
-
-class AuthWrapper extends ConsumerWidget {
-  const AuthWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authProvider);
-    if (user == null) {
-      return const SignInScreen();
-    } else {
-      return const Home();
-    }
   }
 }

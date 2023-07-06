@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todo_list/models/todo.dart';
-import 'package:todo_list/screens/settings.dart';
 import 'package:todo_list/services/database_service.dart';
 import 'package:todo_list/widgets/add_dialog_box.dart';
 import 'package:todo_list/widgets/edit_dialog_box.dart';
@@ -43,7 +43,6 @@ class _HomeState extends State<Home> {
     if (newTodoTitle == null) {
       return;
     }
-    final Todo newTodo = await _databaseService.addTodo(newTodoTitle);
     _animatedListStateKey.currentState?.insertItem(
       todoList.length,
       duration: const Duration(milliseconds: 500),
@@ -53,7 +52,9 @@ class _HomeState extends State<Home> {
         setState(() {});
       });
     }
-    todoList.add(newTodo);
+    todoList.add(Todo(0, newTodoTitle, false));
+    final Todo newTodo = await _databaseService.addTodo(newTodoTitle);
+    todoList[todoList.length - 1] = newTodo;
   }
 
   Future<void> editTodo(int index) async {
@@ -104,12 +105,7 @@ class _HomeState extends State<Home> {
           IconButton(
             tooltip: "Settings",
             icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SettingsScreen(),
-              ),
-            ),
+            onPressed: () => context.push("/settings"),
           ),
         ],
       ),
