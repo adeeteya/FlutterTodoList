@@ -26,6 +26,11 @@ const SettingsDataSchema = CollectionSchema(
       id: 1,
       name: r'isDarkTheme',
       type: IsarType.bool,
+    ),
+    r'lastUpdatedDate': PropertySchema(
+      id: 2,
+      name: r'lastUpdatedDate',
+      type: IsarType.dateTime,
     )
   },
   estimateSize: _settingsDataEstimateSize,
@@ -59,6 +64,7 @@ void _settingsDataSerialize(
 ) {
   writer.writeLong(offsets[0], object.colorValue);
   writer.writeBool(offsets[1], object.isDarkTheme);
+  writer.writeDateTime(offsets[2], object.lastUpdatedDate);
 }
 
 SettingsData _settingsDataDeserialize(
@@ -70,6 +76,7 @@ SettingsData _settingsDataDeserialize(
   final object = SettingsData(
     reader.readBool(offsets[1]),
     reader.readLong(offsets[0]),
+    reader.readDateTime(offsets[2]),
   );
   return object;
 }
@@ -85,6 +92,8 @@ P _settingsDataDeserializeProp<P>(
       return (reader.readLong(offset)) as P;
     case 1:
       return (reader.readBool(offset)) as P;
+    case 2:
+      return (reader.readDateTime(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -300,6 +309,62 @@ extension SettingsDataQueryFilter
       ));
     });
   }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterFilterCondition>
+      lastUpdatedDateEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastUpdatedDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterFilterCondition>
+      lastUpdatedDateGreaterThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastUpdatedDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterFilterCondition>
+      lastUpdatedDateLessThan(
+    DateTime value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastUpdatedDate',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterFilterCondition>
+      lastUpdatedDateBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastUpdatedDate',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension SettingsDataQueryObject
@@ -333,6 +398,20 @@ extension SettingsDataQuerySortBy
       sortByIsDarkThemeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isDarkTheme', Sort.desc);
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterSortBy>
+      sortByLastUpdatedDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterSortBy>
+      sortByLastUpdatedDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedDate', Sort.desc);
     });
   }
 }
@@ -376,6 +455,20 @@ extension SettingsDataQuerySortThenBy
       return query.addSortBy(r'isDarkTheme', Sort.desc);
     });
   }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterSortBy>
+      thenByLastUpdatedDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedDate', Sort.asc);
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QAfterSortBy>
+      thenByLastUpdatedDateDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastUpdatedDate', Sort.desc);
+    });
+  }
 }
 
 extension SettingsDataQueryWhereDistinct
@@ -389,6 +482,13 @@ extension SettingsDataQueryWhereDistinct
   QueryBuilder<SettingsData, SettingsData, QDistinct> distinctByIsDarkTheme() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'isDarkTheme');
+    });
+  }
+
+  QueryBuilder<SettingsData, SettingsData, QDistinct>
+      distinctByLastUpdatedDate() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastUpdatedDate');
     });
   }
 }
@@ -410,6 +510,13 @@ extension SettingsDataQueryProperty
   QueryBuilder<SettingsData, bool, QQueryOperations> isDarkThemeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isDarkTheme');
+    });
+  }
+
+  QueryBuilder<SettingsData, DateTime, QQueryOperations>
+      lastUpdatedDateProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastUpdatedDate');
     });
   }
 }

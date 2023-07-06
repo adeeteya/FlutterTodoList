@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:todo_list/controllers/auth_controller.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
 import 'package:todo_list/widgets/change_theme_color_dialog.dart';
 
@@ -27,7 +28,6 @@ class SettingsScreen extends ConsumerWidget {
               await ref.read(settingsProvider.notifier).toggleThemeMode();
             },
           ),
-          const Divider(),
           ListTile(
             title: const Text("Theme Color"),
             onTap: () async {
@@ -50,6 +50,17 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
             ),
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: const Text("Logout"),
+            onTap: () async {
+              await ref
+                  .read(authProvider.notifier)
+                  .logout()
+                  .then((_) => Navigator.pop(context));
+            },
           ),
         ],
       ),

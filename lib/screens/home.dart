@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_list/models/todo.dart';
-import 'package:todo_list/screens/settings_screen.dart';
+import 'package:todo_list/screens/settings.dart';
 import 'package:todo_list/services/database_service.dart';
 import 'package:todo_list/widgets/add_dialog_box.dart';
 import 'package:todo_list/widgets/edit_dialog_box.dart';
@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> deleteTodo(int index) async {
-    await _isarService.deleteTodo(todoList[index].id);
+    await _isarService.deleteTodo(todoList[index].id, todoList[index].tid);
     final Todo removedTodo = todoList.removeAt(index);
     _animatedListStateKey.currentState?.removeItem(
       index,

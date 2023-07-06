@@ -8,11 +8,13 @@ class SettingsData {
 
   final bool isDarkTheme;
   final int colorValue;
+  final DateTime lastUpdatedDate;
 
-  SettingsData(this.isDarkTheme, this.colorValue);
+  SettingsData(this.isDarkTheme, this.colorValue, this.lastUpdatedDate);
 
-  SettingsData copyWith({bool? isDarkTheme, int? colorValue}) {
-    return SettingsData(
-        isDarkTheme ?? this.isDarkTheme, colorValue ?? this.colorValue);
+  SettingsData copyWith(
+      {bool? isDarkTheme, int? colorValue, DateTime? lastUpdatedDate}) {
+    return SettingsData(isDarkTheme ?? this.isDarkTheme,
+        colorValue ?? this.colorValue, lastUpdatedDate ?? this.lastUpdatedDate);
   }
 }

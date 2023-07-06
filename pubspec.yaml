@@ -1,5 +1,5 @@
 name: todo_list
-description: A Simple Todo List App
+description: A Multi-Platform Sync Enabled Todo List App
 
 publish_to: 'none'
 version: 1.0.0+1
@@ -13,6 +13,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0+1
   path_provider: ^2.0.15
   flutter_riverpod: ^2.3.6
+  supabase_flutter: ^1.10.6
 
 dev_dependencies:
   flutter_test:
