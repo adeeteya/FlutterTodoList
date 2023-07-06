@@ -12,19 +12,15 @@ class SettingsNotifier extends Notifier<SettingsData> {
   SettingsData build() {
     initialize();
     return SettingsData(
-      PlatformDispatcher.instance.platformBrightness == Brightness.dark,
-      Colors.green.value,
-      DateTime.now(),
-    );
+        PlatformDispatcher.instance.platformBrightness == Brightness.dark,
+        Colors.green.value);
   }
 
   Future<void> initialize() async {
     state = await DatabaseService().isar.settingsDatas.get(0) ??
         SettingsData(
-          PlatformDispatcher.instance.platformBrightness == Brightness.dark,
-          Colors.green.value,
-          DateTime.now(),
-        );
+            PlatformDispatcher.instance.platformBrightness == Brightness.dark,
+            Colors.green.value);
   }
 
   Future<void> toggleThemeMode() async {

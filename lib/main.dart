@@ -21,7 +21,6 @@ Future<void> main() async {
   await Supabase.initialize(
     url: projectUrl,
     anonKey: anonKey,
-    authFlowType: AuthFlowType.pkce,
   );
   await DatabaseService().init();
   runApp(const ProviderScope(child: TodoListApp()));

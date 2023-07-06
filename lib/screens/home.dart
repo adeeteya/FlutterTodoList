@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final DatabaseService _isarService = DatabaseService();
+  final DatabaseService _databaseService = DatabaseService();
   final GlobalKey<AnimatedListState> _animatedListStateKey =
       GlobalKey<AnimatedListState>();
   List<Todo> todoList = [];
@@ -27,7 +27,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> initTodos() async {
-    todoList = await _isarService.getTodos();
+    todoList = await _databaseService.getTodos();
     for (int i = 0; i < todoList.length; i++) {
       _animatedListStateKey.currentState
           ?.insertItem(i, duration: const Duration(milliseconds: 500));
@@ -39,12 +39,11 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> addTodo() async {
-    String? newTodoTitle = await addTodoDialogBox(context);
+    final String? newTodoTitle = await addTodoDialogBox(context);
     if (newTodoTitle == null) {
       return;
     }
-    final Todo newTodo = Todo(newTodoTitle, false);
-    await _isarService.addTodo(newTodo);
+    final Todo newTodo = await _databaseService.addTodo(newTodoTitle);
     _animatedListStateKey.currentState?.insertItem(
       todoList.length,
       duration: const Duration(milliseconds: 500),
@@ -64,18 +63,18 @@ class _HomeState extends State<Home> {
     }
     todoList[index] = todoList[index].copyWith(title: newTitle);
     _animatedListStateKey.currentState?.setState(() {});
-    await _isarService.editTodo(todoList[index]);
+    await _databaseService.editTodo(todoList[index]);
   }
 
   Future<void> checkedTodo(int index) async {
     todoList[index] =
         todoList[index].copyWith(isCompleted: !todoList[index].isCompleted);
     _animatedListStateKey.currentState?.setState(() {});
-    await _isarService.editTodo(todoList[index]);
+    await _databaseService.editTodo(todoList[index]);
   }
 
   Future<void> deleteTodo(int index) async {
-    await _isarService.deleteTodo(todoList[index].id, todoList[index].tid);
+    _databaseService.deleteTodo(todoList[index].id);
     final Todo removedTodo = todoList.removeAt(index);
     _animatedListStateKey.currentState?.removeItem(
       index,

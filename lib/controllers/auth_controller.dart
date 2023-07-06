@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:todo_list/services/database_service.dart';
 
 final authProvider =
     NotifierProvider<AuthNotifier, User?>(() => AuthNotifier());
@@ -49,8 +48,5 @@ class AuthNotifier extends Notifier<User?> {
     }
   }
 
-  Future<void> logout() async {
-    await DatabaseService().deleteAllLocalTodos();
-    await _client.auth.signOut();
-  }
+  Future<void> logout() => _client.auth.signOut();
 }

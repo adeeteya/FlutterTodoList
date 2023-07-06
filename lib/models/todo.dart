@@ -1,23 +1,16 @@
-import 'package:isar/isar.dart';
-
-part 'todo.g.dart';
-
-@collection
 class Todo {
-  final Id id;
-  final int tid;
+  final int id;
   final String title;
   final bool isCompleted;
-  Todo(this.title, this.isCompleted,
-      {this.id = Isar.autoIncrement, this.tid = 0});
+  Todo(this.id, this.title, this.isCompleted);
 
-  Todo copyWith({String? title, bool? isCompleted, int? tid}) {
-    return Todo(title ?? this.title, isCompleted ?? this.isCompleted,
-        id: id, tid: tid ?? this.tid);
+  Todo copyWith({int? id, String? title, bool? isCompleted}) {
+    return Todo(
+        id ?? this.id, title ?? this.title, isCompleted ?? this.isCompleted);
   }
 
   factory Todo.fromJson(Map<String, dynamic> json) {
-    return Todo(json['title'], json['isCompleted'], tid: json['id']);
+    return Todo(json['id'], json['title'], json['isCompleted']);
   }
 
   Map<String, String> toJson() {
