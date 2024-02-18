@@ -9,10 +9,10 @@ Please star⭐ the repo if you like what you see😊.
 
 ### Android
 
-[![Download apk](https://img.shields.io/badge/Download-apk-green)](https://github.com/adityar224/FlutterTodoList/releases/download/1.1.0/TodoList-Android.apk)
+[![Download apk](https://img.shields.io/badge/Download-apk-green)](https://github.com/adeeteya/FlutterTodoList/releases/download/1.1.0/TodoList-Android.apk)
 
 ### Windows
-[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adityar224/FlutterTodoList/releases/download/1.1.0/TodoList-Windows.exe)
+[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adeeteya/FlutterTodoList/releases/download/1.1.0/TodoList-Windows.exe)
 
 ## ✨ Features
 
@@ -45,11 +45,11 @@ Please star⭐ the repo if you like what you see😊.
 
 ## 🤓 Author
 
-**[Aditya R](https://github.com/adityar224)**
+**[Aditya R](https://github.com/adeeteya)**
 
 ## 🔖 LICENSE
-Copyright (c) 2023 **[Aditya R](https://github.com/adityar224)**
-[MIT LICENSE](https://github.com/adityar224/FlutterTodoList/blob/master/LICENSE)
+Copyright (c) 2023 **[Aditya R](https://github.com/adeeteya)**
+[MIT LICENSE](https://github.com/adeeteya/FlutterTodoList/blob/master/LICENSE)
 
 ## 🙏 Attributions
 <a href="https://www.flaticon.com/free-icons/to-do-list" title="to do list icons">To do list icons created by Freepik - Flaticon</a>
