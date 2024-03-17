@@ -35,7 +35,6 @@ class TodoListApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       themeMode: settingsData.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
-        useMaterial3: true,
         colorSchemeSeed: Color(settingsData.colorValue),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -47,7 +46,6 @@ class TodoListApp extends ConsumerWidget {
         ),
       ),
       darkTheme: ThemeData(
-        useMaterial3: true,
         brightness: Brightness.dark,
         colorSchemeSeed: Color(settingsData.colorValue),
         elevatedButtonTheme: ElevatedButtonThemeData(

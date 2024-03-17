@@ -6,7 +6,7 @@ import 'package:todo_list/controllers/settings_controller.dart';
 import 'package:todo_list/widgets/change_theme_color_dialog.dart';
 
 class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
