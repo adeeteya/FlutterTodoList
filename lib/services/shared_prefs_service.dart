@@ -9,7 +9,7 @@ class SharedPrefService {
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
-    settingsData=await getPreferences();
+    settingsData = await getPreferences();
   }
 
   Future<SettingsData> getPreferences() async {

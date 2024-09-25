@@ -25,7 +25,8 @@ class DatabaseService {
     await _client
         .from('Todos')
         .update(
-            editedTodo.toJson()..addAll({'pid': _client.auth.currentUser!.id}))
+          editedTodo.toMap()..addAll({'pid': _client.auth.currentUser!.id}),
+        )
         .eq('id', editedTodo.id);
   }
 

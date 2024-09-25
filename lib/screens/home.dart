@@ -138,20 +138,25 @@ class _HomeState extends State<Home> {
                     ],
                   ),
                 )
-              : AnimatedList(
-                  key: _animatedListStateKey,
-                  initialItemCount: todoList.length,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                  itemBuilder: (context, index, animation) {
-                    return TodoListTile(
-                      todo: todoList[index],
-                      animation: animation,
-                      editTodo: () => editTodo(index),
-                      checkedTodo: () => checkedTodo(index),
-                      deleteTodo: () => deleteTodo(index),
-                    );
-                  },
+              : Center(
+                  child: SizedBox(
+                    width: 500,
+                    child: AnimatedList(
+                      key: _animatedListStateKey,
+                      initialItemCount: todoList.length,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10),
+                      itemBuilder: (context, index, animation) {
+                        return TodoListTile(
+                          todo: todoList[index],
+                          animation: animation,
+                          editTodo: () => editTodo(index),
+                          checkedTodo: () => checkedTodo(index),
+                          deleteTodo: () => deleteTodo(index),
+                        );
+                      },
+                    ),
+                  ),
                 ),
     );
   }

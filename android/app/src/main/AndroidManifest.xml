@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="io.supabase.flutterquickstart"
+                    android:scheme="com.adeeteya.todo_list"
                     android:host="login-callback" />
             </intent-filter>
 
