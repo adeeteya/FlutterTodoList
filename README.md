@@ -1,6 +1,6 @@
 # 📝 Todo List
 
-Todo List is a simple cross-platform Todo App Built using Flutter and Supabase.
+Todo List is a simple cross-platform Todo App Built using Flutter and Firebase.
 The app is responsive, follows Material3 guidelines and is rich with animations.
 
 Please star⭐ the repo if you like what you see😊.
@@ -9,10 +9,10 @@ Please star⭐ the repo if you like what you see😊.
 
 ### Android
 
-[![Download apk](https://img.shields.io/badge/Download-apk-green)](https://github.com/adeeteya/FlutterTodoList/releases/download/1.1.0/TodoList-Android.apk)
+[![Download apk](https://img.shields.io/badge/Download-apk-green)](https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Android.apk)
 
 ### Windows
-[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adeeteya/FlutterTodoList/releases/download/1.1.0/TodoList-Windows.exe)
+[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Windows.exe)
 
 ## ✨ Features
 
@@ -36,11 +36,13 @@ Please star⭐ the repo if you like what you see😊.
 
 | Name                                                                  | Usage                                                                  |
 |-----------------------------------------------------------------------|------------------------------------------------------------------------|
+| [**firebase_auth**](https://pub.dev/packages/firebase_auth)           | For Device Authentication                                              |
+| [**firebase_core**](https://pub.dev/packages/firebase_core)           | For Firebase Libraries                                                 |
+| [**firebase_ui_auth**](https://pub.dev/packages/firebase_ui_auth)     | For Authentication UI Helpers                                          |
 | [**flutter_riverpod**](https://pub.dev/packages/flutter_riverpod)     | For State Management                                                   |
 | [**go_router**](https://pub.dev/packages/go_router)                   | To Handle Routing and Navigation                                       |
 | [**lottie**](https://pub.dev/packages/lottie)                         | To Display Animations                                                  |
 | [**shared_preferences**](https://pub.dev/packages/shared_preferences) | To Store User Settings Preferences                                     |
-| [**supabase_flutter**](https://pub.dev/packages/supabase_flutter)     | To Connect With Supabase Backend                                       |
 | [**flutter_lints**](https://pub.dev/packages/flutter_lints)           | Contains a recommended set of lints to encourage good coding practices |
 
 ## 🤓 Author

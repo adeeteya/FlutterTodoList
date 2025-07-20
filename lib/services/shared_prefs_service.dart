@@ -14,9 +14,10 @@ class SharedPrefService {
 
   Future<SettingsData> getPreferences() async {
     return SettingsData(
-        _prefs.getBool("isDarkMode") ??
-            PlatformDispatcher.instance.platformBrightness == Brightness.dark,
-        _prefs.getInt("colorValue") ?? Colors.green.value);
+      _prefs.getBool("isDarkMode") ??
+          PlatformDispatcher.instance.platformBrightness == Brightness.dark,
+      _prefs.getInt("colorValue") ?? Colors.green.toARGB32(),
+    );
   }
 
   Future<void> setDarkMode(bool isDarkMode) async {

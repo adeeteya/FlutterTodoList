@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-final authProvider =
-    NotifierProvider<AuthNotifier, User?>(() => AuthNotifier());
+final authProvider = NotifierProvider<AuthNotifier, User?>(
+  () => AuthNotifier(),
+);
 
 class AuthNotifier extends Notifier<User?> {
   final SupabaseClient _client = Supabase.instance.client;
@@ -22,19 +22,15 @@ class AuthNotifier extends Notifier<User?> {
     try {
       return await _client.auth
           .signInWithOtp(
-              email: email.trim(),
-              emailRedirectTo: kIsWeb
-                  ? null
-                  : 'io.supabase.flutterquickstart://login-callback/')
-          .then(
-            (_) => context.go("/login/authenticate"),
-          );
+            email: email.trim(),
+            emailRedirectTo: kIsWeb
+                ? null
+                : 'io.supabase.flutterquickstart://login-callback/',
+          )
+          .then((_) => context.go("/login/authenticate"));
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.message),
-          backgroundColor: Colors.redAccent,
-        ),
+        SnackBar(content: Text(e.message), backgroundColor: Colors.redAccent),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(

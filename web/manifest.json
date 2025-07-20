@@ -1,11 +1,11 @@
 {
-    "name": "todo_list",
-    "short_name": "todo_list",
+    "name": "Todo List",
+    "short_name": "Todo List",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A Simple Todo List App",
+    "description": "A Todo List application to manage your tasks efficiently.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

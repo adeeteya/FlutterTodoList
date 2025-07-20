@@ -1,25 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
-import 'package:todo_list/private_keys.dart';
 import 'package:todo_list/routes.dart';
 import 'package:todo_list/services/shared_prefs_service.dart';
 
+import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent,
-    ),
-  );
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  await Supabase.initialize(
-    url: projectUrl,
-    anonKey: anonKey,
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   await SharedPrefService().init();
   runApp(const ProviderScope(child: TodoListApp()));

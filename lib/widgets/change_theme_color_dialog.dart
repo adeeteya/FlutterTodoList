@@ -35,94 +35,94 @@ Future<int?> showChangeThemeColorDialog(
           spacing: 10,
           runSpacing: 10,
           children: [
-            colorPickerWidget(Colors.brown.value, () {
+            colorPickerWidget(Colors.brown.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.brown.value;
+                selectedColorValue = Colors.brown.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.blueGrey.value, () {
+            colorPickerWidget(Colors.blueGrey.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.blueGrey.value;
+                selectedColorValue = Colors.blueGrey.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.deepPurple.value, () {
+            colorPickerWidget(Colors.deepPurple.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.deepPurple.value;
+                selectedColorValue = Colors.deepPurple.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.purple.value, () {
+            colorPickerWidget(Colors.purple.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.purple.value;
+                selectedColorValue = Colors.purple.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.indigo.value, () {
+            colorPickerWidget(Colors.indigo.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.indigo.value;
+                selectedColorValue = Colors.indigo.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.blue.value, () {
+            colorPickerWidget(Colors.blue.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.blue.value;
+                selectedColorValue = Colors.blue.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.lightBlue.value, () {
+            colorPickerWidget(Colors.lightBlue.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.lightBlue.value;
+                selectedColorValue = Colors.lightBlue.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.cyan.value, () {
+            colorPickerWidget(Colors.cyan.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.cyan.value;
+                selectedColorValue = Colors.cyan.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.teal.value, () {
+            colorPickerWidget(Colors.teal.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.teal.value;
+                selectedColorValue = Colors.teal.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.green.value, () {
+            colorPickerWidget(Colors.green.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.green.value;
+                selectedColorValue = Colors.green.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.lightGreen.value, () {
+            colorPickerWidget(Colors.lightGreen.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.lightGreen.value;
+                selectedColorValue = Colors.lightGreen.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.lime.value, () {
+            colorPickerWidget(Colors.lime.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.lime.value;
+                selectedColorValue = Colors.lime.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.yellow.value, () {
+            colorPickerWidget(Colors.yellow.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.yellow.value;
+                selectedColorValue = Colors.yellow.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.amber.value, () {
+            colorPickerWidget(Colors.amber.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.amber.value;
+                selectedColorValue = Colors.amber.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.orange.value, () {
+            colorPickerWidget(Colors.orange.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.orange.value;
+                selectedColorValue = Colors.orange.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.deepOrange.value, () {
+            colorPickerWidget(Colors.deepOrange.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.deepOrange.value;
+                selectedColorValue = Colors.deepOrange.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.red.value, () {
+            colorPickerWidget(Colors.red.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.red.value;
+                selectedColorValue = Colors.red.toARGB32();
               });
             }),
-            colorPickerWidget(Colors.pink.value, () {
+            colorPickerWidget(Colors.pink.toARGB32(), () {
               setState(() {
-                selectedColorValue = Colors.pink.value;
+                selectedColorValue = Colors.pink.toARGB32();
               });
             }),
           ],

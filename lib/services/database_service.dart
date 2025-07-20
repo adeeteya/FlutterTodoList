@@ -1,4 +1,3 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:todo_list/models/todo.dart';
 
 class DatabaseService {
@@ -16,7 +15,7 @@ class DatabaseService {
     final returnedResult = await _client.from('Todos').insert({
       'title': newTodoTitle,
       'isCompleted': false,
-      'pid': _client.auth.currentUser!.id
+      'pid': _client.auth.currentUser!.id,
     }).select();
     return Todo.fromJson(returnedResult[0]);
   }
