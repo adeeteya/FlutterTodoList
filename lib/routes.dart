@@ -17,7 +17,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       redirect: (context, state) async {
         final initialLink = await AppLinks().getInitialLinkString();
         if (initialLink != null && context.mounted) {
-          ref.read(authProvider.notifier).login(context, initialLink);
+          await ref.read(authProvider.notifier).login(context, initialLink);
         }
         return null;
       },
@@ -25,13 +25,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: "/login",
           name: "Login",
-          pageBuilder: (context, state) => CupertinoPage(child: SignInScreen()),
+          pageBuilder: (context, state) =>
+              const CupertinoPage(child: SignInScreen()),
           routes: [
             GoRoute(
               path: "authenticate",
               name: "Authenticate",
               pageBuilder: (context, state) =>
-                  CupertinoPage(child: CheckEmailScreen()),
+                  const CupertinoPage(child: CheckEmailScreen()),
             ),
           ],
         ),
@@ -45,13 +46,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: "/",
           name: "Home",
-          pageBuilder: (context, state) => CupertinoPage(child: Home()),
+          pageBuilder: (context, state) => const CupertinoPage(child: Home()),
         ),
         GoRoute(
           path: "/settings",
           name: "Settings",
           pageBuilder: (context, state) =>
-              CupertinoPage(child: SettingsScreen()),
+              const CupertinoPage(child: SettingsScreen()),
         ),
       ],
     );

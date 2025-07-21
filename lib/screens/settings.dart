@@ -36,10 +36,13 @@ class SettingsScreen extends ConsumerWidget {
               ListTile(
                 title: const Text("Theme Color"),
                 onTap: () async {
-                  int? newSelectedColor = await showChangeThemeColorDialog(
-                      context, settingsData.colorValue);
+                  final int? newSelectedColor =
+                      await showChangeThemeColorDialog(
+                        context,
+                        settingsData.colorValue,
+                      );
                   if (newSelectedColor != null) {
-                    ref
+                    await ref
                         .read(settingsProvider.notifier)
                         .changeThemeColor(newSelectedColor);
                   }

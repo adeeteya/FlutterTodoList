@@ -2,10 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
+import 'package:todo_list/firebase_options.dart';
 import 'package:todo_list/routes.dart';
 import 'package:todo_list/services/shared_prefs_service.dart';
-
-import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

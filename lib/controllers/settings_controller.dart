@@ -2,8 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_list/models/settings_data.dart';
 import 'package:todo_list/services/shared_prefs_service.dart';
 
-final settingsProvider =
-    NotifierProvider<SettingsNotifier, SettingsData>(() => SettingsNotifier());
+final settingsProvider = NotifierProvider<SettingsNotifier, SettingsData>(
+  SettingsNotifier.new,
+);
 
 class SettingsNotifier extends Notifier<SettingsData> {
   @override

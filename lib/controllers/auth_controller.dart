@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list/services/shared_prefs_service.dart';
 
-final authProvider = NotifierProvider<AuthNotifier, User?>(
-  () => AuthNotifier(),
-);
+final authProvider = NotifierProvider<AuthNotifier, User?>(AuthNotifier.new);
 
 class AuthNotifier extends Notifier<User?> {
   final FirebaseAuth _instance = FirebaseAuth.instance;

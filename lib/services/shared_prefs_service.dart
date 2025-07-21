@@ -9,7 +9,7 @@ class SharedPrefService {
 
   Future<void> init() async {
     _prefs = await SharedPreferencesWithCache.create(
-      cacheOptions: SharedPreferencesWithCacheOptions(),
+      cacheOptions: const SharedPreferencesWithCacheOptions(),
     );
     settingsData = await getPreferences();
   }

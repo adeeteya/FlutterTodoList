@@ -20,16 +20,18 @@ class _CheckEmailScreenState extends ConsumerState<CheckEmailScreen> {
   @override
   void initState() {
     super.initState();
-    _authLinkCheckerSubscription = AppLinks().stringLinkStream.listen((link) {
+    _authLinkCheckerSubscription = AppLinks().stringLinkStream.listen((
+      link,
+    ) async {
       if (mounted) {
-        ref.read(authProvider.notifier).login(context, link);
+        await ref.read(authProvider.notifier).login(context, link);
       }
     });
   }
 
   @override
   void dispose() {
-    _authLinkCheckerSubscription.cancel();
+    unawaited(_authLinkCheckerSubscription.cancel());
     super.dispose();
   }
 

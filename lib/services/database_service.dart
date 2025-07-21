@@ -10,7 +10,7 @@ class DatabaseService {
     final querySnapshot = await _instance
         .collection('Todos')
         .where('uid', isEqualTo: _firebaseAuth.currentUser?.uid)
-        .get(GetOptions());
+        .get(const GetOptions());
     return querySnapshot.docs
         .map((e) => Todo.fromMap(e.data()..addAll({'id': e.id})))
         .toList();

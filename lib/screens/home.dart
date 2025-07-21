@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
@@ -23,7 +25,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    initTodos();
+    unawaited(initTodos());
     super.initState();
   }
 
@@ -61,7 +63,10 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> editTodo(int index) async {
-    String? newTitle = await editTodoDialogBox(context, todoList[index].title);
+    final String? newTitle = await editTodoDialogBox(
+      context,
+      todoList[index].title,
+    );
     if (newTitle == null) {
       return;
     }
@@ -79,7 +84,7 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> deleteTodo(int index) async {
-    _databaseService.deleteTodo(todoList[index].id);
+    await _databaseService.deleteTodo(todoList[index].id);
     final Todo removedTodo = todoList.removeAt(index);
     _animatedListStateKey.currentState?.removeItem(
       index,
@@ -118,7 +123,7 @@ class _HomeState extends State<Home> {
         onPressed: addTodo,
         child: const Icon(Icons.add),
       ),
-      body: (_isLoading)
+      body: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : (todoList.isEmpty)
           ? Center(
