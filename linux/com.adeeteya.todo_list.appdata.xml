@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+    <id>com.adeeteya.todo_list</id>
+    <name>Todo List</name>
+    <summary>
+        A Multi-Platform Sync Enabled Todo List App
+    </summary>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>MIT</project_license>
+    <recommends>
+        <control>pointing</control>
+        <control>touch</control>
+    </recommends>
+    <developer_name>Aditya</developer_name>
+    <url type="bugtracker">https://github.com/adeeteya/FlutterTodoList/issues</url>
+    <url type="homepage">https://github.com/adeeteya/FlutterTodoList</url>
+    <url type="donation">https://buymeacoffee.com/adeeteya</url>
+    <description>
+        A Multi-Platform Sync Enabled Todo List App
+    </description>
+    <screenshots>
+        <screenshot type="default">
+            <image type="source">
+                https://rawcdn.githack.com/adeeteya/FlutterTodoList/refs/heads/master/screenshots/recording_1.gif
+            </image>
+            <caption>App Demo Recording</caption>
+        </screenshot>
+        <screenshot>
+            <image type="source">
+                https://rawcdn.githack.com/adeeteya/FlutterTodoList/refs/heads/master/screenshots/screenshot_2.jpg
+            </image>
+            <caption>Empty Todo</caption>
+        </screenshot>
+        <screenshot>
+            <image type="source">
+                https://rawcdn.githack.com/adeeteya/FlutterTodoList/refs/heads/master/screenshots/screenshot_3.jpg
+            </image>
+            <caption>Add Todo</caption>
+        </screenshot>
+        <screenshot>
+            <image type="source">
+                https://rawcdn.githack.com/adeeteya/FlutterTodoList/refs/heads/master/screenshots/screenshot_4.jpg
+            </image>
+            <caption>Edit Todo</caption>
+        </screenshot>
+        <screenshot>
+            <image type="source">
+                https://rawcdn.githack.com/adeeteya/FlutterTodoList/refs/heads/master/screenshots/screenshot_5.jpg
+            </image>
+            <caption>Light Theme</caption>
+        </screenshot>
+    </screenshots>
+    <launchable type="desktop-id">com.adeeteya.todo_list.desktop</launchable>
+    <releases>%{{APPDATA_RELEASE}}%
+        <release version="1.0.0" date="2025-22-06" />
+    </releases>
+    <content_rating type="oars-1.1" />
+    <update_contact>adeeteya@gmail.com</update_contact>
+</component>

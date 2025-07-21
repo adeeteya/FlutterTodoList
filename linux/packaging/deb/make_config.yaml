@@ -1,0 +1,29 @@
+display_name: Todo List
+package_name: todo-list
+maintainer:
+  name: Aditya
+  email: adeeteya@gmail.com
+priority: optional
+section: x11
+installed_size: 9280
+essential: false
+icon: snap/gui/todo-list.png
+
+postinstall_scripts:
+  - echo "Thanks for installing Todo List. If you like the app please give it a star on GitHub"
+postuninstall_scripts:
+  - echo "Sorry to see you go. If there are problems in the app please open an issue on GitHub"
+
+keywords:
+  - Todo
+  - Productivity
+  - Task Management
+  - To-Do List
+
+generic_name: Todo List
+
+categories:
+  - Productivity
+  - Utilities
+
+startup_notify: true

@@ -1,0 +1,24 @@
+icon: snap/gui/todo-list.png
+summary: A Multi-Platform Sync Enabled Todo List App
+group: Applications/Productivity
+vendor: adeeteya
+packager: Aditya R
+packagerEmail: adeeteya@gmail.com
+license: MIT
+url: https://github.com/adeeteya/FlutterTodoList
+
+display_name: Todo List
+
+keywords:
+  - Todo
+  - Productivity
+  - Task Management
+  - To-Do List
+
+generic_name: Todo List
+
+categories:
+  - Productivity
+  - Utilities
+
+startup_notify: true
