@@ -4,11 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_list/models/settings_data.dart';
 
 class SharedPrefService {
-  static late final SharedPreferences _prefs;
+  static late final SharedPreferencesWithCache _prefs;
   static late final SettingsData settingsData;
 
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    _prefs = await SharedPreferencesWithCache.create(
+      cacheOptions: SharedPreferencesWithCacheOptions(),
+    );
     settingsData = await getPreferences();
   }
 
@@ -26,5 +28,17 @@ class SharedPrefService {
 
   Future<void> setColorValue(int colorValue) async {
     await _prefs.setInt("colorValue", colorValue);
+  }
+
+  String? getEmail() {
+    return _prefs.getString("email");
+  }
+
+  Future<void> setEmail(String email) async {
+    await _prefs.setString("email", email);
+  }
+
+  Future<void> removeEmail() async {
+    await _prefs.remove("email");
   }
 }

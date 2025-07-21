@@ -20,11 +20,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       child: Scaffold(
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-          child: Center(
-            child: SizedBox(
-              width: 500,
-              child: Form(
-                key: _formKey,
+          child: SizedBox(
+            width: 500,
+            child: Form(
+              key: _formKey,
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     const Text(
@@ -45,6 +45,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     TextFormField(
                       autofocus: true,
                       keyboardType: TextInputType.emailAddress,
+                      autofillHints: [AutofillHints.email],
                       decoration: InputDecoration(
                         filled: true,
                         isDense: true,
@@ -70,7 +71,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         if (_formKey.currentState!.validate()) {
                           await ref
                               .read(authProvider.notifier)
-                              .logIn(context, email);
+                              .sendEmail(context, email);
                         }
                       },
                       child: const Text("Send Magic Link"),

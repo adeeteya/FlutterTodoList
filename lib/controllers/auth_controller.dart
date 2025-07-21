@@ -1,44 +1,92 @@
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_list/services/shared_prefs_service.dart';
 
 final authProvider = NotifierProvider<AuthNotifier, User?>(
   () => AuthNotifier(),
 );
 
 class AuthNotifier extends Notifier<User?> {
-  final SupabaseClient _client = Supabase.instance.client;
+  final FirebaseAuth _instance = FirebaseAuth.instance;
 
   @override
   User? build() {
-    _client.auth.onAuthStateChange.listen((event) {
-      state = event.session?.user;
+    _instance.authStateChanges().listen((user) {
+      state = user;
     });
-    return _client.auth.currentUser;
+    return _instance.currentUser;
   }
 
-  Future<void> logIn(BuildContext context, String email) async {
+  Future<void> sendEmail(BuildContext context, String email) async {
     try {
-      return await _client.auth
-          .signInWithOtp(
-            email: email.trim(),
-            emailRedirectTo: kIsWeb
-                ? null
-                : 'io.supabase.flutterquickstart://login-callback/',
-          )
-          .then((_) => context.go("/login/authenticate"));
-    } on AuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message), backgroundColor: Colors.redAccent),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Unexpected Error Occurred"),
-          backgroundColor: Colors.redAccent,
+      await SharedPrefService().setEmail(email.trim());
+      await _instance.sendSignInLinkToEmail(
+        email: email.trim(),
+        actionCodeSettings: ActionCodeSettings(
+          androidPackageName: "com.adeeteya.todo_list",
+          androidMinimumVersion: "1.2.0",
+          linkDomain: "todo-list.adeeteya.me",
+          androidInstallApp: true,
+          handleCodeInApp: true,
+          iOSBundleId: "com.adeeteya.todo_list",
+          url: "https://todo-list.adeeteya.me/finishSignIn",
         ),
       );
+      if (context.mounted) {
+        context.go("/login/authenticate");
+      }
+    } on FirebaseAuthException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? ''),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Unexpected Error Occurred"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> login(BuildContext context, String emailLink) async {
+    try {
+      if (!_instance.isSignInWithEmailLink(emailLink)) {
+        return;
+      }
+
+      final email = SharedPrefService().getEmail();
+      if (email != null) {
+        await _instance.signInWithEmailLink(email: email, emailLink: emailLink);
+        await SharedPrefService().removeEmail();
+      }
+    } on FirebaseAuthException catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? ''),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Unexpected Error Occurred"),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
     }
   }
 
@@ -57,7 +105,7 @@ class AuthNotifier extends Notifier<User?> {
           TextButton(
             onPressed: () async {
               Navigator.pop(context);
-              await _client.auth.signOut();
+              await _instance.signOut();
             },
             child: const Text("Logout"),
           ),

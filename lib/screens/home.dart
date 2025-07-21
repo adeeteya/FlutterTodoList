@@ -30,8 +30,10 @@ class _HomeState extends State<Home> {
   Future<void> initTodos() async {
     todoList = await _databaseService.getTodos();
     for (int i = 0; i < todoList.length; i++) {
-      _animatedListStateKey.currentState
-          ?.insertItem(i, duration: const Duration(milliseconds: 500));
+      _animatedListStateKey.currentState?.insertItem(
+        i,
+        duration: const Duration(milliseconds: 500),
+      );
       await Future.delayed(const Duration(milliseconds: 250));
     }
     setState(() {
@@ -53,7 +55,7 @@ class _HomeState extends State<Home> {
         setState(() {});
       });
     }
-    todoList.add(Todo(0, newTodoTitle, false));
+    todoList.add(Todo('0', newTodoTitle, false));
     final Todo newTodo = await _databaseService.addTodo(newTodoTitle);
     todoList[todoList.length - 1] = newTodo;
   }
@@ -69,8 +71,9 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> checkedTodo(int index) async {
-    todoList[index] =
-        todoList[index].copyWith(isCompleted: !todoList[index].isCompleted);
+    todoList[index] = todoList[index].copyWith(
+      isCompleted: !todoList[index].isCompleted,
+    );
     _animatedListStateKey.currentState?.setState(() {});
     await _databaseService.editTodo(todoList[index]);
   }
@@ -116,48 +119,47 @@ class _HomeState extends State<Home> {
         child: const Icon(Icons.add),
       ),
       body: (_isLoading)
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Center(child: CircularProgressIndicator())
           : (todoList.isEmpty)
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(),
-                      Flexible(
-                        flex: 10,
-                        child: Lottie.asset("assets/todo_done.json"),
-                      ),
-                      const Text(
-                        "All Todos Done",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                      ),
-                      const Spacer(flex: 5),
-                    ],
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Flexible(
+                    flex: 10,
+                    child: Lottie.asset("assets/todo_done.json"),
                   ),
-                )
-              : Center(
-                  child: SizedBox(
-                    width: 500,
-                    child: AnimatedList(
-                      key: _animatedListStateKey,
-                      initialItemCount: todoList.length,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10),
-                      itemBuilder: (context, index, animation) {
-                        return TodoListTile(
-                          todo: todoList[index],
-                          animation: animation,
-                          editTodo: () => editTodo(index),
-                          checkedTodo: () => checkedTodo(index),
-                          deleteTodo: () => deleteTodo(index),
-                        );
-                      },
-                    ),
+                  const Text(
+                    "All Todos Done",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
+                  const Spacer(flex: 5),
+                ],
+              ),
+            )
+          : Center(
+              child: SizedBox(
+                width: 500,
+                child: AnimatedList(
+                  key: _animatedListStateKey,
+                  initialItemCount: todoList.length,
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 10,
+                  ),
+                  itemBuilder: (context, index, animation) {
+                    return TodoListTile(
+                      todo: todoList[index],
+                      animation: animation,
+                      editTodo: () => editTodo(index),
+                      checkedTodo: () => checkedTodo(index),
+                      deleteTodo: () => deleteTodo(index),
+                    );
+                  },
                 ),
+              ),
+            ),
     );
   }
 }

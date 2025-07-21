@@ -1,35 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list/models/todo.dart';
 
 class DatabaseService {
-  final SupabaseClient _client = Supabase.instance.client;
+  final FirebaseFirestore _instance = FirebaseFirestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<List<Todo>> getTodos() async {
-    final List returnedResult = await _client
-        .from('Todos')
-        .select()
-        .eq('pid', _client.auth.currentUser!.id);
-    return returnedResult.map((e) => Todo.fromJson(e)).toList();
+    final querySnapshot = await _instance
+        .collection('Todos')
+        .where('uid', isEqualTo: _firebaseAuth.currentUser?.uid)
+        .get(GetOptions());
+    return querySnapshot.docs
+        .map((e) => Todo.fromMap(e.data()..addAll({'id': e.id})))
+        .toList();
   }
 
   Future<Todo> addTodo(String newTodoTitle) async {
-    final returnedResult = await _client.from('Todos').insert({
+    final newTodo = <String, dynamic>{
       'title': newTodoTitle,
       'isCompleted': false,
-      'pid': _client.auth.currentUser!.id,
-    }).select();
-    return Todo.fromJson(returnedResult[0]);
+      'uid': _firebaseAuth.currentUser?.uid,
+    };
+    final documentReference = await _instance.collection('Todos').add(newTodo);
+    return Todo.fromMap(newTodo..addAll({'id': documentReference.id}));
   }
 
   Future<void> editTodo(Todo editedTodo) async {
-    await _client
-        .from('Todos')
-        .update(
-          editedTodo.toMap()..addAll({'pid': _client.auth.currentUser!.id}),
-        )
-        .eq('id', editedTodo.id);
+    await _instance
+        .collection('Todos')
+        .doc(editedTodo.id)
+        .update(editedTodo.toMap());
   }
 
-  Future<void> deleteTodo(int id) async {
-    await _client.from('Todos').delete().eq('id', id);
+  Future<void> deleteTodo(String id) async {
+    await _instance.collection('Todos').doc(id).delete();
   }
 }

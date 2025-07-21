@@ -1,3 +1,5 @@
+import 'package:app_links/app_links.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:todo_list/controllers/auth_controller.dart';
@@ -12,17 +14,25 @@ final routerProvider = Provider<GoRouter>((ref) {
     return GoRouter(
       initialLocation: "/login",
       onException: (_, state, router) => router.go('/'),
+      redirect: (context, state) async {
+        final initialLink = await AppLinks().getInitialLinkString();
+        if (initialLink != null && context.mounted) {
+          ref.read(authProvider.notifier).login(context, initialLink);
+        }
+        return null;
+      },
       routes: [
         GoRoute(
           path: "/login",
           name: "Login",
-          builder: (context, state) => const SignInScreen(),
+          pageBuilder: (context, state) => CupertinoPage(child: SignInScreen()),
           routes: [
             GoRoute(
               path: "authenticate",
               name: "Authenticate",
-              builder: (context, state) => const CheckEmailScreen(),
-            )
+              pageBuilder: (context, state) =>
+                  CupertinoPage(child: CheckEmailScreen()),
+            ),
           ],
         ),
       ],
@@ -35,12 +45,13 @@ final routerProvider = Provider<GoRouter>((ref) {
         GoRoute(
           path: "/",
           name: "Home",
-          builder: (context, state) => const Home(),
+          pageBuilder: (context, state) => CupertinoPage(child: Home()),
         ),
         GoRoute(
           path: "/settings",
           name: "Settings",
-          builder: (context, state) => const SettingsScreen(),
+          pageBuilder: (context, state) =>
+              CupertinoPage(child: SettingsScreen()),
         ),
       ],
     );
