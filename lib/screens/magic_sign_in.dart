@@ -2,16 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_list/controllers/auth_controller.dart';
 
-class SignInScreen extends ConsumerStatefulWidget {
-  const SignInScreen({super.key});
+class MagicSignInScreen extends ConsumerStatefulWidget {
+  const MagicSignInScreen({super.key});
 
   @override
-  ConsumerState createState() => _SignInScreenState();
+  ConsumerState createState() => _MagicSignInScreenState();
 }
 
-class _SignInScreenState extends ConsumerState<SignInScreen> {
+class _MagicSignInScreenState extends ConsumerState<MagicSignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String email = "";
+  final TextEditingController _emailTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailTextController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _signIn() async {
+    FocusScope.of(context).unfocus();
+    if (_formKey.currentState!.validate()) {
+      await ref
+          .read(authProvider.notifier)
+          .sendEmail(context, _emailTextController.text.trim());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +62,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                       const SizedBox(height: 60),
                       TextFormField(
                         autofocus: true,
+                        controller: _emailTextController,
                         keyboardType: TextInputType.emailAddress,
                         autofillHints: const [AutofillHints.email],
                         decoration: InputDecoration(
@@ -63,20 +79,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                           }
                           return null;
                         },
-                        onChanged: (val) {
-                          email = val;
-                        },
+                        onFieldSubmitted: (_) => _signIn(),
                       ),
                       const SizedBox(height: 50),
                       ElevatedButton(
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-                          if (_formKey.currentState!.validate()) {
-                            await ref
-                                .read(authProvider.notifier)
-                                .sendEmail(context, email);
-                          }
-                        },
+                        onPressed: _signIn,
                         child: const Text("Send Magic Link"),
                       ),
                     ],

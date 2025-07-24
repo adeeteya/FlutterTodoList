@@ -24,7 +24,9 @@ class _CheckEmailScreenState extends ConsumerState<CheckEmailScreen> {
       link,
     ) async {
       if (mounted) {
-        await ref.read(authProvider.notifier).login(context, link);
+        await ref
+            .read(authProvider.notifier)
+            .loginUsingEmailLink(context, link);
       }
     });
   }

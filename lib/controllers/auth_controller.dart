@@ -25,11 +25,11 @@ class AuthNotifier extends Notifier<User?> {
         actionCodeSettings: ActionCodeSettings(
           androidPackageName: "com.adeeteya.todo_list",
           androidMinimumVersion: "1.2.0",
-          linkDomain: "todo-list.adeeteya.me",
+          dynamicLinkDomain: "adeeteya.page.link",
           androidInstallApp: true,
           handleCodeInApp: true,
           iOSBundleId: "com.adeeteya.todo_list",
-          url: "https://todo-list.adeeteya.me/finishSignIn",
+          url: "https://adeeteya.page.link/todo-list/finishSignIn",
         ),
       );
       if (context.mounted) {
@@ -56,7 +56,10 @@ class AuthNotifier extends Notifier<User?> {
     }
   }
 
-  Future<void> login(BuildContext context, String emailLink) async {
+  Future<void> loginUsingEmailLink(
+    BuildContext context,
+    String emailLink,
+  ) async {
     try {
       if (!_instance.isSignInWithEmailLink(emailLink)) {
         return;
@@ -68,10 +71,10 @@ class AuthNotifier extends Notifier<User?> {
         await SharedPrefService().removeEmail();
       }
     } on FirebaseAuthException catch (e) {
-      if (context.mounted) {
+      if (context.mounted && e.message != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.message ?? ''),
+            content: Text(e.message!),
             backgroundColor: Colors.redAccent,
           ),
         );
