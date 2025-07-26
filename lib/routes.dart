@@ -1,4 +1,3 @@
-import 'package:app_links/app_links.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -15,15 +14,6 @@ final routerProvider = Provider<GoRouter>((ref) {
     return GoRouter(
       initialLocation: "/sign_in",
       onException: (_, state, router) => router.go('/'),
-      redirect: (context, state) async {
-        final initialLink = await AppLinks().getInitialLinkString();
-        if (initialLink != null && context.mounted) {
-          await ref
-              .read(authProvider.notifier)
-              .signInUsingEmailLink(context, initialLink);
-        }
-        return null;
-      },
       routes: [
         GoRoute(
           path: "/sign_up",

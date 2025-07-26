@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:app_links/app_links.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:todo_list/constants.dart';
 import 'package:todo_list/controllers/auth_controller.dart';
 
 class CheckEmailScreen extends ConsumerStatefulWidget {
@@ -17,15 +15,15 @@ class CheckEmailScreen extends ConsumerStatefulWidget {
 }
 
 class _CheckEmailScreenState extends ConsumerState<CheckEmailScreen> {
-  late final StreamSubscription _authLinkCheckerSubscription;
+  // late final StreamSubscription _authLinkCheckerSubscription;
   late final Timer _emailVerificationTimer;
 
   @override
   void initState() {
     super.initState();
     if (widget.user != null) {
-      unawaited(widget.user?.sendEmailVerification(kActionCodeSettings));
-      _emailVerificationTimer = Timer.periodic(const Duration(seconds: 10), (
+      unawaited(widget.user?.sendEmailVerification());
+      _emailVerificationTimer = Timer.periodic(const Duration(seconds: 5), (
         timer,
       ) async {
         if (mounted) {
@@ -33,25 +31,25 @@ class _CheckEmailScreenState extends ConsumerState<CheckEmailScreen> {
         }
       });
     }
-    _authLinkCheckerSubscription = AppLinks().stringLinkStream.listen((
-      link,
-    ) async {
-      if (mounted) {
-        if (widget.user != null) {
-          await widget.user?.reload();
-        } else {
-          await ref
-              .read(authProvider.notifier)
-              .signInUsingEmailLink(context, link);
-        }
-      }
-    });
+    // _authLinkCheckerSubscription = AppLinks().stringLinkStream.listen((
+    //   link,
+    // ) async {
+    //   if (mounted) {
+    //     if (widget.user != null) {
+    //       await widget.user?.reload();
+    //     } else {
+    //       await ref
+    //           .read(authProvider.notifier)
+    //           .signInUsingEmailLink(context, link);
+    //     }
+    //   }
+    // });
   }
 
   @override
   void dispose() {
     if (widget.user == null) {
-      unawaited(_authLinkCheckerSubscription.cancel());
+      // unawaited(_authLinkCheckerSubscription.cancel());
     } else {
       _emailVerificationTimer.cancel();
     }
@@ -59,7 +57,7 @@ class _CheckEmailScreenState extends ConsumerState<CheckEmailScreen> {
   }
 
   Future<void> _resendEmail() async {
-    await widget.user?.sendEmailVerification(kActionCodeSettings);
+    await widget.user?.sendEmailVerification();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
