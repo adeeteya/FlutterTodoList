@@ -136,7 +136,7 @@ class _HomeState extends State<Home> {
                     child: Lottie.asset("assets/todo_done.json"),
                   ),
                   const Text(
-                    "All Todos Done",
+                    "No Todos Pending",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   const Spacer(flex: 5),

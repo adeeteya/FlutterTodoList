@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:todo_list/constants.dart';
 import 'package:todo_list/services/shared_prefs_service.dart';
 
 final authProvider = NotifierProvider<AuthNotifier, User?>(AuthNotifier.new);
@@ -11,26 +12,61 @@ class AuthNotifier extends Notifier<User?> {
 
   @override
   User? build() {
-    _instance.authStateChanges().listen((user) {
+    _instance.userChanges().listen((user) {
       state = user;
     });
     return _instance.currentUser;
   }
 
-  Future<void> sendEmail(BuildContext context, String email) async {
+  Future<void> signUpUsingEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    await _instance.createUserWithEmailAndPassword(
+      email: email.trim(),
+      password: password.trim(),
+    );
+  }
+
+  Future<void> signInUsingEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    await _instance.signInWithEmailAndPassword(
+      email: email.trim(),
+      password: password.trim(),
+    );
+  }
+
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _instance.sendPasswordResetEmail(email: email.trim());
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "invalid-email" || e.code == "user-not-found") {
+        throw Exception(
+          "There is no account associated with this email. Please sign up first.",
+        );
+      } else if (e.code == "too-many-requests") {
+        throw Exception(
+          "You have made too many requests. Please try signing in later.",
+        );
+      } else if (e.code == "network-request-failed") {
+        throw Exception(
+          "There was a network error. Please check your internet connection and try again.",
+        );
+      }
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception("Unexpected Error Occurred. Please try again later.");
+    }
+  }
+
+  Future<void> sendSignInEmail(BuildContext context, String email) async {
     try {
       await SharedPrefService().setEmail(email.trim());
       await _instance.sendSignInLinkToEmail(
         email: email.trim(),
-        actionCodeSettings: ActionCodeSettings(
-          androidPackageName: "com.adeeteya.todo_list",
-          androidMinimumVersion: "1.2.0",
-          dynamicLinkDomain: "adeeteya.page.link",
-          androidInstallApp: true,
-          handleCodeInApp: true,
-          iOSBundleId: "com.adeeteya.todo_list",
-          url: "https://adeeteya.page.link/todo-list/finishSignIn",
-        ),
+        actionCodeSettings: kActionCodeSettings,
       );
       if (context.mounted) {
         context.go("/login/authenticate");
@@ -56,7 +92,7 @@ class AuthNotifier extends Notifier<User?> {
     }
   }
 
-  Future<void> loginUsingEmailLink(
+  Future<void> signInUsingEmailLink(
     BuildContext context,
     String emailLink,
   ) async {
@@ -91,7 +127,7 @@ class AuthNotifier extends Notifier<User?> {
     }
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> signOut(BuildContext context) async {
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(

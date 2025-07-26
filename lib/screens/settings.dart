@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:todo_list/controllers/auth_controller.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
 import 'package:todo_list/widgets/change_theme_color_dialog.dart';
@@ -12,14 +11,7 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsData = ref.watch(settingsProvider);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          tooltip: "Back",
-          onPressed: () => context.go("/"),
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
-        title: const Text("Settings"),
-      ),
+      appBar: AppBar(centerTitle: true, title: const Text("Settings")),
       body: Center(
         child: SizedBox(
           width: 500,
@@ -65,7 +57,7 @@ class SettingsScreen extends ConsumerWidget {
                 leading: const Icon(Icons.logout),
                 title: const Text("Logout"),
                 onTap: () async {
-                  await ref.read(authProvider.notifier).logout(context);
+                  await ref.read(authProvider.notifier).signOut(context);
                 },
               ),
             ],

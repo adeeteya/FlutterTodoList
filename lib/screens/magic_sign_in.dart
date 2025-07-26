@@ -24,7 +24,7 @@ class _MagicSignInScreenState extends ConsumerState<MagicSignInScreen> {
     if (_formKey.currentState!.validate()) {
       await ref
           .read(authProvider.notifier)
-          .sendEmail(context, _emailTextController.text.trim());
+          .sendSignInEmail(context, _emailTextController.text);
     }
   }
 
