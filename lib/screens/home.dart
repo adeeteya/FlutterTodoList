@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:todo_list/models/todo.dart';
-import 'package:todo_list/screens/settings_screen.dart';
 import 'package:todo_list/services/database_service.dart';
 import 'package:todo_list/widgets/add_dialog_box.dart';
 import 'package:todo_list/widgets/edit_dialog_box.dart';
@@ -14,7 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final DatabaseService _isarService = DatabaseService();
+  final DatabaseService _databaseService = DatabaseService();
   final GlobalKey<AnimatedListState> _animatedListStateKey =
       GlobalKey<AnimatedListState>();
   List<Todo> todoList = [];
@@ -22,15 +25,17 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    initTodos();
+    unawaited(initTodos());
     super.initState();
   }
 
   Future<void> initTodos() async {
-    todoList = await _isarService.getTodos();
+    todoList = await _databaseService.getTodos();
     for (int i = 0; i < todoList.length; i++) {
-      _animatedListStateKey.currentState
-          ?.insertItem(i, duration: const Duration(milliseconds: 500));
+      _animatedListStateKey.currentState?.insertItem(
+        i,
+        duration: const Duration(milliseconds: 500),
+      );
       await Future.delayed(const Duration(milliseconds: 250));
     }
     setState(() {
@@ -39,12 +44,10 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> addTodo() async {
-    String? newTodoTitle = await addTodoDialogBox(context);
+    final String? newTodoTitle = await addTodoDialogBox(context);
     if (newTodoTitle == null) {
       return;
     }
-    final Todo newTodo = Todo(newTodoTitle, false);
-    await _isarService.addTodo(newTodo);
     _animatedListStateKey.currentState?.insertItem(
       todoList.length,
       duration: const Duration(milliseconds: 500),
@@ -54,28 +57,34 @@ class _HomeState extends State<Home> {
         setState(() {});
       });
     }
-    todoList.add(newTodo);
+    todoList.add(Todo('0', newTodoTitle, false));
+    final Todo newTodo = await _databaseService.addTodo(newTodoTitle);
+    todoList[todoList.length - 1] = newTodo;
   }
 
   Future<void> editTodo(int index) async {
-    String? newTitle = await editTodoDialogBox(context, todoList[index].title);
+    final String? newTitle = await editTodoDialogBox(
+      context,
+      todoList[index].title,
+    );
     if (newTitle == null) {
       return;
     }
     todoList[index] = todoList[index].copyWith(title: newTitle);
     _animatedListStateKey.currentState?.setState(() {});
-    await _isarService.editTodo(todoList[index]);
+    await _databaseService.editTodo(todoList[index]);
   }
 
   Future<void> checkedTodo(int index) async {
-    todoList[index] =
-        todoList[index].copyWith(isCompleted: !todoList[index].isCompleted);
+    todoList[index] = todoList[index].copyWith(
+      isCompleted: !todoList[index].isCompleted,
+    );
     _animatedListStateKey.currentState?.setState(() {});
-    await _isarService.editTodo(todoList[index]);
+    await _databaseService.editTodo(todoList[index]);
   }
 
   Future<void> deleteTodo(int index) async {
-    await _isarService.deleteTodo(todoList[index].id);
+    await _databaseService.deleteTodo(todoList[index].id);
     final Todo removedTodo = todoList.removeAt(index);
     _animatedListStateKey.currentState?.removeItem(
       index,
@@ -105,12 +114,7 @@ class _HomeState extends State<Home> {
           IconButton(
             tooltip: "Settings",
             icon: const Icon(Icons.settings),
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SettingsScreen(),
-              ),
-            ),
+            onPressed: () => context.push("/settings"),
           ),
         ],
       ),
@@ -119,22 +123,36 @@ class _HomeState extends State<Home> {
         onPressed: addTodo,
         child: const Icon(Icons.add),
       ),
-      body: (_isLoading)
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
           : (todoList.isEmpty)
-              ? const Center(
-                  child: Text(
-                    "No Tasks left ☺",
-                    style: TextStyle(fontSize: 16),
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  Flexible(
+                    flex: 10,
+                    child: Lottie.asset("assets/todo_done.json"),
                   ),
-                )
-              : AnimatedList(
+                  const Text(
+                    "No Todos Pending",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  const Spacer(flex: 5),
+                ],
+              ),
+            )
+          : Center(
+              child: SizedBox(
+                width: 500,
+                child: AnimatedList(
                   key: _animatedListStateKey,
                   initialItemCount: todoList.length,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 20,
+                    horizontal: 10,
+                  ),
                   itemBuilder: (context, index, animation) {
                     return TodoListTile(
                       todo: todoList[index],
@@ -145,6 +163,8 @@ class _HomeState extends State<Home> {
                     );
                   },
                 ),
+              ),
+            ),
     );
   }
 }

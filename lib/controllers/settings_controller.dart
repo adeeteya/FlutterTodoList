@@ -1,41 +1,24 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_list/models/settings_data.dart';
-import 'package:todo_list/services/database_service.dart';
+import 'package:todo_list/services/shared_prefs_service.dart';
 
-final settingsProvider =
-    NotifierProvider<SettingsNotifier, SettingsData>(() => SettingsNotifier());
+final settingsProvider = NotifierProvider<SettingsNotifier, SettingsData>(
+  SettingsNotifier.new,
+);
 
 class SettingsNotifier extends Notifier<SettingsData> {
   @override
   SettingsData build() {
-    initialize();
-    return SettingsData(
-      PlatformDispatcher.instance.platformBrightness == Brightness.dark,
-      Colors.amber.value,
-    );
+    return SharedPrefService.settingsData;
   }
 
-  Future initialize() async {
-    state = await DatabaseService().isar.settingsDatas.get(0) ??
-        SettingsData(
-          PlatformDispatcher.instance.platformBrightness == Brightness.dark,
-          Colors.amber.value,
-        );
-  }
-
-  Future toggleThemeMode() async {
+  Future<void> toggleThemeMode() async {
     state = state.copyWith(isDarkTheme: !state.isDarkTheme);
-    await DatabaseService().isar.writeTxn(() async {
-      await DatabaseService().isar.settingsDatas.put(state);
-    });
+    await SharedPrefService().setDarkMode(state.isDarkTheme);
   }
 
-  Future changeThemeColor(int newColorValue) async {
+  Future<void> changeThemeColor(int newColorValue) async {
     state = state.copyWith(colorValue: newColorValue);
-    await DatabaseService().isar.writeTxn(() async {
-      await DatabaseService().isar.settingsDatas.put(state);
-    });
+    await SharedPrefService().setColorValue(state.colorValue);
   }
 }

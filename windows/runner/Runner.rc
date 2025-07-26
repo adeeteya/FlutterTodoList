@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "todo_list" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "todo_list" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2022 com.adeeteya. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2025 com.adeeteya. All rights reserved." "\0"
             VALUE "OriginalFilename", "todo_list.exe" "\0"
             VALUE "ProductName", "todo_list" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

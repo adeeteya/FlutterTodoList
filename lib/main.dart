@@ -1,20 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:todo_list/controllers/settings_controller.dart';
-import 'package:todo_list/screens/home.dart';
-import 'package:todo_list/services/database_service.dart';
+import 'package:todo_list/firebase_options.dart';
+import 'package:todo_list/routes.dart';
+import 'package:todo_list/services/shared_prefs_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent,
-    ),
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await SharedPrefService().init();
+  FirebaseFirestore.instance.settings = const Settings(
+    persistenceEnabled: true,
+    cacheSizeBytes: Settings.CACHE_SIZE_UNLIMITED,
   );
-  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  await DatabaseService().init();
+
   runApp(const ProviderScope(child: TodoListApp()));
 }
 
@@ -24,20 +25,34 @@ class TodoListApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingsData = ref.watch(settingsProvider);
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Todo List',
       debugShowCheckedModeBanner: false,
       themeMode: settingsData.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
       theme: ThemeData(
-        useMaterial3: true,
         colorSchemeSeed: Color(settingsData.colorValue),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            minimumSize: const Size(double.infinity, 50),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
-        useMaterial3: true,
         brightness: Brightness.dark,
         colorSchemeSeed: Color(settingsData.colorValue),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            minimumSize: const Size(double.infinity, 50),
+          ),
+        ),
       ),
-      home: const Home(),
+      routerConfig: ref.watch(routerProvider),
     );
   }
 }

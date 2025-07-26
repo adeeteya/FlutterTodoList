@@ -1,38 +1,39 @@
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:todo_list/models/settings_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:todo_list/models/todo.dart';
 
 class DatabaseService {
-  static late final Isar _isar;
-
-  Isar get isar => _isar;
-
-  Future<void> init() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    _isar = await Isar.open([TodoSchema, SettingsDataSchema],
-        directory: documentsDirectory.path);
-  }
+  final FirebaseFirestore _instance = FirebaseFirestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<List<Todo>> getTodos() async {
-    return await _isar.todos.where().findAll();
+    final querySnapshot = await _instance
+        .collection('Todos')
+        .where('uid', isEqualTo: _firebaseAuth.currentUser?.uid)
+        .get(const GetOptions());
+    return querySnapshot.docs
+        .map((e) => Todo.fromMap(e.data()..addAll({'id': e.id})))
+        .toList();
   }
 
-  Future addTodo(Todo newTodo) async {
-    await DatabaseService().isar.writeTxn(() async {
-      await DatabaseService().isar.todos.put(newTodo);
-    });
+  Future<Todo> addTodo(String newTodoTitle) async {
+    final newTodo = <String, dynamic>{
+      'title': newTodoTitle,
+      'isCompleted': false,
+      'uid': _firebaseAuth.currentUser?.uid,
+    };
+    final documentReference = await _instance.collection('Todos').add(newTodo);
+    return Todo.fromMap(newTodo..addAll({'id': documentReference.id}));
   }
 
-  Future editTodo(Todo editedTodo) async {
-    await DatabaseService().isar.writeTxn(() async {
-      await DatabaseService().isar.todos.put(editedTodo);
-    });
+  Future<void> editTodo(Todo editedTodo) async {
+    await _instance
+        .collection('Todos')
+        .doc(editedTodo.id)
+        .update(editedTodo.toMap());
   }
 
-  Future deleteTodo(int id) async {
-    await DatabaseService().isar.writeTxn(() async {
-      await DatabaseService().isar.todos.delete(id);
-    });
+  Future<void> deleteTodo(String id) async {
+    await _instance.collection('Todos').doc(id).delete();
   }
 }
