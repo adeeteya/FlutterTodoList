@@ -13,6 +13,12 @@ Please star⭐ the repo if you like what you see😊.
 
 ### Windows
 [![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Windows.exe)
+=======
+### Website and Progressive Web App
+[![Visit Website](https://img.shields.io/badge/Visit-website-violet)](https://adeeteya.github.io/FlutterTodoList/)
+
+### Windows (Offline-only)
+[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adityar224/FlutterTodoList/releases/download/1.0.0/TodoList-Windows.exe)
 
 ## ✨ Features
 
