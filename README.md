@@ -1,24 +1,50 @@
 # 📝 Todo List
 
-Todo List is a simple cross-platform Todo App Built using Flutter and Firebase.
-The app is responsive, follows Material3 guidelines and is rich with animations.
+Todo List is a simple cross-platform Todo App Built using Flutter and Firebase, designed to keep you productive on Android, Web, and Windows. The app is responsive, follows Material3 guidelines and is rich with animations.
 
 Please star⭐ the repo if you like what you see😊.
 
 ## 💻 Installation and Usage
 
-### Android
+<table>
+  <tr>
+    <th>Platform</th>
+    <th>Installation Links</th>
+  </tr>
+  <tr>
+    <td>Android</td>
+    <td>
+      <a href="https://play.google.com/store/apps/details?id=com.adeeteya.todo_list">
+        <img height="80" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png">
+      </a>
+      <br>
+      <a href="https://f-droid.org/packages/com.adeeteya.todo_list">
+        <img height="80" alt="Get it on F-Droid" src="https://f-droid.org/badge/get-it-on.png">
+      </a>
+      <br>
+      <a href="https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Android.apk">
+        <img alt="APK download" src="https://img.shields.io/static/v1?label=Download&message=Android+.apk&color=2ea44f&style=for-the-badge&logo=Android&logoColor=white&logoSize=auto">
+      </a>
+    </td>
+  </tr>
+  <tr>
+      <td>Windows</td>
+      <td>
+        <a href="https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Windows.exe">
+          <img alt="Download Windows Installer" src="https://img.shields.io/static/v1?label=Download&message=Windows+.exe&color=blue&style=for-the-badge&logo=webtrees&logoColor=white&logoSize=auto">
+        </a>
+      </td>
+  </tr>
 
-[![Download apk](https://img.shields.io/badge/Download-apk-green)](https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Android.apk)
-
-### Windows
-[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adeeteya/FlutterTodoList/releases/latest/download/TodoList-Windows.exe)
-=======
-### Website and Progressive Web App
-[![Visit Website](https://img.shields.io/badge/Visit-website-violet)](https://adeeteya.github.io/FlutterTodoList/)
-
-### Windows (Offline-only)
-[![Download exe](https://img.shields.io/badge/Download-exe-blue)](https://github.com/adityar224/FlutterTodoList/releases/download/1.0.0/TodoList-Windows.exe)
+  <tr>
+      <td>Web App</td>
+      <td>
+        <a href="https://adeeteya.github.io/FlutterTodoList/#/">
+          <img alt="Web App" src="https://img.shields.io/static/v1?label=Webapp&message=Visit+Website&color=blueviolet&style=for-the-badge&logo=googlechrome&logoColor=white&logoSize=auto">
+        </a>
+      </td>
+  </tr>
+</table>
 
 ## ✨ Features
 
@@ -31,20 +57,28 @@ Please star⭐ the repo if you like what you see😊.
 - [x] Responsive Design
 - [x] Material 3 Design
 - [x] Web Support
-- [x] Online Sync Through Supabase
-- [x] Email Authentication Through Magic Link
-- [ ] Offline First Sync Across Multiple Devices
+- [x] Online Sync Through Firebase
+- [x] Email and Password Authentication
+- [x] Offline First Sync Across Multiple Devices
+
+## 📽️ Screen Recording
+<img alt="Todo List App Recording" src="screenshots/recording_1.gif" height="587px" width="256px"/>
 
 ## 📸 Screenshots
-<img alt="Todo List App Recording" src="screenshots/recording_1.gif" height="587px" width="256px"/> <img alt="Empty Todo List" src="screenshots/screenshot_2.jpg" height="587px" width="256px"/> <img alt="Add Todo Image" src="screenshots/screenshot_3.jpg" height="587px" width="256px"/> <img alt="Edit Todo Image" src="screenshots/screenshot_4.jpg" height="587px" width="256px"/>  <img alt="Light Theme Image" src="screenshots/screenshot_5.jpg" height="587px" width="256px"/>
+<img alt="Smart Task Management" src="screenshots/1.jpg" height="587px" width="256px"/>
+<img alt="Secure Sign-In" src="screenshots/2.jpg" height="587px" width="256px"/>
+<img alt="Personalize Your App" src="screenshots/3.jpg" height="587px" width="256px"/>
+<img alt="Smooth Animations" src="screenshots/4.jpg" height="587px" width="256px"/>
+<img alt="Quick Todo Actions" src="screenshots/5.jpg" height="587px" width="256px"/>
+<img alt="Works on Web & Desktop" src="screenshots/6.jpg" height="587px" width="256px"/>
 
 ## 🔌 Plugins
 
 | Name                                                                  | Usage                                                                  |
 |-----------------------------------------------------------------------|------------------------------------------------------------------------|
+| [**cloud_firestore**](https://pub.dev/packages/cloud_firestore)       | For Firestore Database                                                 |
 | [**firebase_auth**](https://pub.dev/packages/firebase_auth)           | For Device Authentication                                              |
 | [**firebase_core**](https://pub.dev/packages/firebase_core)           | For Firebase Libraries                                                 |
-| [**firebase_ui_auth**](https://pub.dev/packages/firebase_ui_auth)     | For Authentication UI Helpers                                          |
 | [**flutter_riverpod**](https://pub.dev/packages/flutter_riverpod)     | For State Management                                                   |
 | [**go_router**](https://pub.dev/packages/go_router)                   | To Handle Routing and Navigation                                       |
 | [**lottie**](https://pub.dev/packages/lottie)                         | To Display Animations                                                  |
