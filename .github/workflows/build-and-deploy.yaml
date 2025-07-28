@@ -88,8 +88,7 @@ jobs:
 
       - name: Run Inno Setup to Build Installer
         run: |
-          $drive = (Get-Location).Drive.Name + ":\a\FlutterTodoList\FlutterTodoList"
-          build\iscc\iscc.exe scripts\windows-setup.iss /DMyAppVersion=${{ inputs.version_number }} /DWorkspacePath="$drive"
+          build\iscc\iscc.exe scripts\windows-setup.iss /DMyAppVersion=${{ inputs.version_number }}
 
       - name: Upload Windows Release Artifact to GitHub Release
         shell: cmd
