@@ -5,6 +5,7 @@
 #define MyAppExeName "todo_list.exe"
 #define MyAppContact "adeeteya@gmail.com"
 #define MyAppCopyright "Copyright (C) 2023 Adeeteya"
+#define WorkspacePath GetEnv("WorkspacePath")
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -23,9 +24,9 @@ AppContact={#MyAppContact}
 AppCopyright={#MyAppCopyright}
 DefaultDirName={autopf}\{#MyAppName}
 DisableProgramGroupPage=yes
-OutputDir=C:\a\FlutterTodoList\FlutterTodoList\
+OutputDir={#WorkspacePath}
 OutputBaseFilename=TodoList-Windows
-SetupIconFile=C:\a\FlutterTodoList\FlutterTodoList\windows\runner\resources\app_icon.ico
+SetupIconFile={#WorkspacePath}\windows\runner\resources\app_icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -45,7 +46,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\a\FlutterTodoList\FlutterTodoList\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#WorkspacePath}\build\windows\x64\runner\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
