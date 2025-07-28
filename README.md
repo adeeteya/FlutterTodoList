@@ -48,29 +48,21 @@ Please star⭐ the repo if you like what you see😊.
 
 ## ✨ Features
 
-- [x] Add Todo
-- [x] Edit Todo
-- [x] Delete Todo
-- [x] Add and Delete Animations
-- [x] Dark and Light Modes
-- [x] Dynamic Primary Color Theming
-- [x] Responsive Design
-- [x] Material 3 Design
-- [x] Web Support
-- [x] Online Sync Through Firebase
-- [x] Email and Password Authentication
-- [x] Offline First Sync Across Multiple Devices
+- ✅ Add, Edit & Delete Todos
+- ✅ Offline-First Sync Across Multiple Devices
+- ✅ Online Sync with Firebase
+- ✅ Email & Password Authentication
+- ✅ Dark & Light Modes
+- ✅ Dynamic Primary Color Themes
+- ✅ Responsive Design (Android, Web, Windows)
+- ✅ Material 3 UI
+- ✅ Smooth Add/Delete Animations
 
 ## 📽️ Screen Recording
 <img alt="Todo List App Recording" src="screenshots/recording_1.gif" height="587px" width="256px"/>
 
 ## 📸 Screenshots
-<img alt="Smart Task Management" src="screenshots/1.jpg" height="587px" width="256px"/>
-<img alt="Secure Sign-In" src="screenshots/2.jpg" height="587px" width="256px"/>
-<img alt="Personalize Your App" src="screenshots/3.jpg" height="587px" width="256px"/>
-<img alt="Smooth Animations" src="screenshots/4.jpg" height="587px" width="256px"/>
-<img alt="Quick Todo Actions" src="screenshots/5.jpg" height="587px" width="256px"/>
-<img alt="Works on Web & Desktop" src="screenshots/6.jpg" height="587px" width="256px"/>
+<img alt="Smart Task Management" src="screenshots/1.jpg" height="587px" width="256px"/> <img alt="Secure Sign-In" src="screenshots/2.jpg" height="587px" width="256px"/> <img alt="Personalize Your App" src="screenshots/3.jpg" height="587px" width="256px"/> <img alt="Smooth Animations" src="screenshots/4.jpg" height="587px" width="256px"/> <img alt="Quick Todo Actions" src="screenshots/5.jpg" height="587px" width="256px"/> <img alt="Works on Web & Desktop" src="screenshots/6.jpg" height="587px" width="256px"/>
 
 ## 🔌 Plugins
 
